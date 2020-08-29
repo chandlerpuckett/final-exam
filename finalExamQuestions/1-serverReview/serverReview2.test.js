@@ -1,6 +1,7 @@
 'use strict';
 
 const request = require('supertest');
+const { response } = require('express');
 
 /*
 -------------------------------------------------------------------
@@ -29,47 +30,59 @@ NOTE: You do not need write the app.listen() code for your server
 const currentEvents = {
   news: [
     {
-      author: "go",
-      category: ["world"],
-      description: "Israel is bracing for more political turmoil ...",
-      id: "1eff5f00-ce1e-4de0-922f-1b70299e9fe2",
-      image: "http://placehold.it/200x200?text=israel",
-      language: "en",
-      published: "2020-04-13 18:00:33 +0000",
-      title: "Israel's coalition talks falter ahead of midnight deadline",
-      url: "https://abcnews.go.com"
+      author: 'go',
+      category: ['world'],
+      description: 'Israel is bracing for more political turmoil ...',
+      id: '1eff5f00-ce1e-4de0-922f-1b70299e9fe2',
+      image: 'http://placehold.it/200x200?text=israel',
+      language: 'en',
+      published: '2020-04-13 18:00:33 +0000',
+      title: 'Israel\'s coalition talks falter ahead of midnight deadline',
+      url: 'https://abcnews.go.com'
     },
     {
-      author: "@allahpundit",
-      category: ["politics"],
-      description: "Federalism....",
-      id: "2bede54d-9df8-4eda-8ea4-5fe166c6b13c",
-      image: "http://placehold.it/200x200?text=federalism",
-      language: "en",
-      published: "2020-04-13 18:00:14 +0000",
-      title: "States vs Nation ... you decide",
-      url: "https://hotair.com"
+      author: '@allahpundit',
+      category: ['politics'],
+      description: 'Federalism....',
+      id: '2bede54d-9df8-4eda-8ea4-5fe166c6b13c',
+      image: 'http://placehold.it/200x200?text=federalism',
+      language: 'en',
+      published: '2020-04-13 18:00:14 +0000',
+      title: 'States vs Nation ... you decide',
+      url: 'https://hotair.com'
     },
     {
-      author: "Daniel Iglesias",
-      category: ["technology", "gadgets"],
-      description: "We're back this week with more applications and games...",
-      id: "8572f23a-06e4-4e55-afa0-33f0b43d00d3",
-      image: "http://placehold.it/200x200?text=gadgets",
-      language: "en",
-      published: "2020-04-13 18:00:13 +0000",
-      title: "The best new apps and games launched for Easter | AndroidPIT",
-      url: "https://www.androidpit.com"
+      author: 'Daniel Iglesias',
+      category: ['technology', 'gadgets'],
+      description: 'We\'re back this week with more applications and games...',
+      id: '8572f23a-06e4-4e55-afa0-33f0b43d00d3',
+      image: 'http://placehold.it/200x200?text=gadgets',
+      language: 'en',
+      published: '2020-04-13 18:00:13 +0000',
+      title: 'The best new apps and games launched for Easter | AndroidPIT',
+      url: 'https://www.androidpit.com'
     },
   ]
-}
+};
 
 function mapCurrentEvents() {
   // Solution code here...
+  const events = currentEvents.news;
+
+  return events.map(construct => new Event(construct));
+
 }
 
 function Event(obj) {
   // Solution code here...
+
+  this.author = obj.author;
+  this.categories = obj.category;
+  this.summary = obj.description;
+  this.img_url = obj.image;
+  this.date = obj.published;
+  this.title = obj.title;
+
 }
 
 // Express sever here
@@ -80,9 +93,16 @@ const createServer = () => {
 
   // Routes go here
 
+  app.get('/events', getCurrentEvents);
+
+  function getCurrentEvents (req,res){
+    let arr = mapCurrentEvents();
+    res.send(arr);
+  }
+
   return app;
 
-}
+};
 
 
 ///////////////////////////////////////////////////
@@ -94,11 +114,11 @@ describe('Testing challenge', () => {
   const server = createServer();
 
   it('It should return an array of object instances with a key of author', () => {
-    expect(mapCurrentEvents()[0].author).toStrictEqual("go");
+    expect(mapCurrentEvents()[0].author).toStrictEqual('go');
   });
 
   it('It should return an array of object instances with a key of categories', () => {
-    expect(mapCurrentEvents()[0].categories).toStrictEqual(["world"]);
+    expect(mapCurrentEvents()[0].categories).toStrictEqual(['world']);
   });
 
   it('responds to /events', function testEvents() {
@@ -107,8 +127,8 @@ describe('Testing challenge', () => {
       .then(response => {
         expect(response.status).toEqual(200);
         expect(response.body.length).toEqual(3);
-        expect(response.body[2].categories).toStrictEqual(["technology", "gadgets"]);
-      })
+        expect(response.body[2].categories).toStrictEqual(['technology', 'gadgets']);
+      });
   });
 
   it('404 everything else', function testPath() {
@@ -116,7 +136,7 @@ describe('Testing challenge', () => {
       .get('/foo/bar')
       .then(response => {
         expect(response.status).toEqual(404);
-      })
+      });
   });
 
 });

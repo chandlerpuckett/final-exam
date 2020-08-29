@@ -33,7 +33,11 @@ let $ = createSnippetWithJQuery(`
 
 const generateLegend = () => {
   // Solution code here ...
-}
+
+  const $button = $('<legend></legend>').text('About You');
+  $('form').append($button);
+
+};
 
 ///////////////////////////////////////////////////
 // TESTS
@@ -42,11 +46,11 @@ const generateLegend = () => {
 describe('Testing challenge', () => {
   test('It should add an input element to the DOM', () => {
     generateLegend();
-    expect($('legend').text()).toStrictEqual("About You");
-  })
-})
+    expect($('legend').text()).toStrictEqual('About You');
+  });
+});
 
 
 function createSnippetWithJQuery(html) {
   return cheerio.load(html);
-};
+}

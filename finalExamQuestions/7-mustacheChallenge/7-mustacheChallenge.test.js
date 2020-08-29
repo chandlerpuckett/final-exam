@@ -25,53 +25,53 @@ Remember, in this test, $ is jQuery, just as it is in a normal web app
 */
 
 let pokemon = {
-  "count": 964,
-  "next": "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20",
-  "previous": null,
-  "results": [
+  'count': 964,
+  'next': 'https://pokeapi.co/api/v2/pokemon?offset=20&limit=20',
+  'previous': null,
+  'results': [
     {
-      "name": "bulbasaur",
-      "url": "https://pokeapi.co/api/v2/pokemon/1/"
+      'name': 'bulbasaur',
+      'url': 'https://pokeapi.co/api/v2/pokemon/1/'
     },
     {
-      "name": "ivysaur",
-      "url": "https://pokeapi.co/api/v2/pokemon/2/"
+      'name': 'ivysaur',
+      'url': 'https://pokeapi.co/api/v2/pokemon/2/'
     },
     {
-      "name": "venusaur",
-      "url": "https://pokeapi.co/api/v2/pokemon/3/"
+      'name': 'venusaur',
+      'url': 'https://pokeapi.co/api/v2/pokemon/3/'
     },
     {
-      "name": "charmander",
-      "url": "https://pokeapi.co/api/v2/pokemon/4/"
+      'name': 'charmander',
+      'url': 'https://pokeapi.co/api/v2/pokemon/4/'
     },
     {
-      "name": "charmeleon",
-      "url": "https://pokeapi.co/api/v2/pokemon/5/"
+      'name': 'charmeleon',
+      'url': 'https://pokeapi.co/api/v2/pokemon/5/'
     },
     {
-      "name": "charizard",
-      "url": "https://pokeapi.co/api/v2/pokemon/6/"
+      'name': 'charizard',
+      'url': 'https://pokeapi.co/api/v2/pokemon/6/'
     },
     {
-      "name": "squirtle",
-      "url": "https://pokeapi.co/api/v2/pokemon/7/"
+      'name': 'squirtle',
+      'url': 'https://pokeapi.co/api/v2/pokemon/7/'
     },
     {
-      "name": "wartortle",
-      "url": "https://pokeapi.co/api/v2/pokemon/8/"
+      'name': 'wartortle',
+      'url': 'https://pokeapi.co/api/v2/pokemon/8/'
     },
     {
-      "name": "blastoise",
-      "url": "https://pokeapi.co/api/v2/pokemon/9/"
+      'name': 'blastoise',
+      'url': 'https://pokeapi.co/api/v2/pokemon/9/'
     },
     {
-      "name": "caterpie",
-      "url": "https://pokeapi.co/api/v2/pokemon/10/"
+      'name': 'caterpie',
+      'url': 'https://pokeapi.co/api/v2/pokemon/10/'
     },
     {
-      "name": "metapod",
-      "url": "https://pokeapi.co/api/v2/pokemon/11/"
+      'name': 'metapod',
+      'url': 'https://pokeapi.co/api/v2/pokemon/11/'
     }
   ]
 };
@@ -86,10 +86,25 @@ let $ = createSnippetWithJQuery(`
 
 const renderPokemon = () => {
   // Solution code here...
-}
+  const list = pokemon.results;
+
+  const arr = list.map(construct => new Poki(construct));
+
+  arr.forEach(value => {
+    const templ = $('#template').html();
+    const newHtml = Mustache.render(templ,value);
+
+    $('main').append(newHtml);
+
+  });
+
+};
 
 function Poki(obj) {
   // Solution code here ...
+  this.name = obj.name;
+  this.img_url = obj.url;
+
 }
 
 ///////////////////////////////////////////////////
@@ -98,7 +113,7 @@ function Poki(obj) {
 
 describe('Testing challenge', () => {
   it('It should return html markup with the character', () => {
-    renderPokemon()
+    renderPokemon();
     expect($('h2').eq(1).text()).toContain('ivysaur');
     expect($('img').eq(5).attr('src')).toContain(6);
   });
@@ -106,4 +121,4 @@ describe('Testing challenge', () => {
 
 function createSnippetWithJQuery(html) {
   return cheerio.load(html);
-};
+}

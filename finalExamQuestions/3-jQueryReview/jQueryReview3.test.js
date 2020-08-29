@@ -22,7 +22,11 @@ let $ = createSnippetWithJQuery(`
 
 const addTea = () => {
   // Solution code here ...
-}
+
+  const $button = $('<li></li>').text('tea');
+  $('ul').append($button);
+
+};
 
 ///////////////////////////////////////////////////
 // TESTS

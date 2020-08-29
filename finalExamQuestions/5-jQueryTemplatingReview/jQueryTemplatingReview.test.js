@@ -16,19 +16,19 @@ Remember, in this test, $ is jQuery, just as it is in a normal web app
 
 let starWarsPeople = [
   {
-    "name": "Luke Skywalker",
-    "height": "172",
-    "eye_color": "blue"
+    'name': 'Luke Skywalker',
+    'height': '172',
+    'eye_color': 'blue'
   },
   {
-    "name": "C-3PO",
-    "height": "167",
-    "eye_color": "yellow"
+    'name': 'C-3PO',
+    'height': '167',
+    'eye_color': 'yellow'
   },
   {
-    "name": "R2-D2",
-    "height": "96",
-    "eye_color": "red"
+    'name': 'R2-D2',
+    'height': '96',
+    'eye_color': 'red'
   }
 ];
 
@@ -44,7 +44,17 @@ let $ = createSnippetWithJQuery(`
 
 const templateWithJQuery = () => {
   // Solution code here...
-}
+
+  for (let i in starWarsPeople){
+    const $clone = $('section:first-child').clone();
+    $clone.find('h2').text(starWarsPeople[i].name);
+    $clone.find('h3').text(starWarsPeople[i].height);
+    $clone.find('p').text(starWarsPeople[i].eye_color);
+    $('main').append($clone);
+  }
+
+
+};
 
 ///////////////////////////////////////////////////
 // TESTS
@@ -56,9 +66,9 @@ describe('Testing challenge', () => {
     expect($('section:nth-child(2) h2').text()).toStrictEqual('Luke Skywalker');
     expect($('section:nth-child(3) h3').text()).toStrictEqual('167');
     expect($('section:nth-child(4) p').text()).toStrictEqual('red');
-  })
+  });
 });
 
 function createSnippetWithJQuery(html) {
   return cheerio.load(html);
-};
+}
