@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHOW</title>
+
+  <link rel="stylesheet" href="./styles/reset.css">
+  <link rel="stylesheet" href="./styles/base.css">
+
+</head>
+  <body>
+
+    <div id="page-wrap">
+      
+      <div id="header-container">
+      </div>
+    
+      <h1>SHOW</h1>
+      
+      <div>
+        <ul id="list-container">
+          <% pokemon.forEach(poke => { %>
+            <li>
+              <form action="/pokemon" name="add" method="post">
+                <h2><%= poke.name %></h2>
+                <input type="hidden" name="name" value="<%= poke.name %>">
+                <button type="submit">Add to Favorites</button>
+              </form>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+
+  </body>
+
+
+</html>
